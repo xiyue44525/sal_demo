@@ -105,16 +105,11 @@
         >
         </el-table-column>
         <el-table-column
-            prop="positionName"
-            label="职位"
-        >
-        </el-table-column>
-        <el-table-column
             prop="sign"
             label="权限"
         >
           <template slot-scope="scope">
-            <span>{{ scope.row.sign === "1" ? '管理员' : '员工' }}</span>
+            <span>{{ scope.row.sign === 1 ? '管理员' : '员工' }}</span>
           </template>
         </el-table-column>
         <el-table-column>
@@ -159,104 +154,58 @@
             :model="form"
             :label-position="labelPosition"
         >
-          <el-form
-              :inline="true"
-              class="demo-form-inline"
+          <el-form-item
               label-width="80px"
+              label="名字"
           >
-            <el-form-item
-                label-width="80px"
-                label="名字"
-            >
-              <el-input
-                  v-model="form.userName"
-                  autocomplete="off"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="手机号">
-              <el-input
-                  v-model="form.phone"
-                  autocomplete="off"
-                  style="width: 100%"
-              ></el-input>
-            </el-form-item>
-          </el-form>
-          <el-form
-              :inline="true"
-              class="demo-form-inline"
+            <el-input
+                v-model="form.userName"
+                autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="手机号">
+            <el-input
+                v-model="form.phone"
+                autocomplete="off"
+                style="width: 100%"
+            ></el-input>
+          </el-form-item>
+          <el-form-item
               label-width="80px"
-              margin-bottom="20px"
-              margin-top="30px"
+              label="部门"
           >
-            <el-form-item
-                label-width="80px"
-                label="部门"
+            <el-select
+                v-model="form.departmentName"
+                clearable
+                placeholder="请选择部门"
             >
-              <el-select
-                  v-model="form.departmentName"
-                  clearable
-                  placeholder="请选择部门"
+              <el-option
+                  v-for="item in departments"
+                  :key="item.departmentId"
+                  :label="item.departmentName"
+                  :value="item.departmentName"
               >
-                <el-option
-                    v-for="item in departments"
-                    :key="item.departmentName"
-                    :label="item.departmentName"
-                    :value="item.departmentName"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item
-                label="性别"
-                style="margin-left:-25px"
-            >
-              <el-radio
-                  v-model="form.sex"
-                  label="男"
-              >男
-              </el-radio>
-              <el-radio
-                  v-model="form.sex"
-                  label="女"
-              >女
-              </el-radio>
-            </el-form-item>
-          </el-form>
-          <el-form margin-bottom="20px">
-            <el-form-item
-                label-width="80px"
-                label="入职时间"
-            >
-              <el-row>
-                <el-col :span="7">
-                  <el-date-picker
-                      type="date"
-                      placeholder="选择日期"
-                      v-model="form.joinDate"
-                      style="width: 100%;"
-                  ></el-date-picker>
-                </el-col>
-                <el-col :span="7">
-                  <el-time-picker
-                      placeholder="选择时间"
-                      v-model="form.joinDate"
-                      style="width: 100%; margin-left: 10px"
-                  ></el-time-picker>
-                </el-col>
-              </el-row>
-            </el-form-item>
-          </el-form>
-          <el-form
-              :inline="true"
-              class="demo-form-inline"
-              label-width="80px"
-              margin-bottom="20px"
-              margin-top="30px"
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item
+              label="性别"
+              style="margin-left:-25px"
           >
+            <el-radio
+                v-model="form.sex"
+                label="男"
+            >男
+            </el-radio>
+            <el-radio
+                v-model="form.sex"
+                label="女"
+            >女
+            </el-radio>
+          </el-form-item>
           <el-form-item
               label="权限"
               label-width="80px"
-              style="width:100%"
           >
             <el-radio
                 v-model="form.sign"
@@ -270,24 +219,42 @@
             </el-radio>
           </el-form-item>
           <el-form-item
+              label="textlabel"
               label-width="80px"
-              label="职位"
           >
-            <el-select
-                v-model="form.positionName"
-                clearable
-                placeholder="请选择职位"
-            >
-              <el-option
-                  v-for="item in positions"
-                  :key="item.position"
-                  :label="item.position"
-                  :value="item.position"
-              >
-              </el-option>
-            </el-select>
+            <el-radio
+                v-model="thtis.xl"
+                label="1"
+            >管理员
+            </el-radio>
+            <el-radio
+                v-model="this.xl"
+                label="0"
+            >员工
+            </el-radio>
           </el-form-item>
-          </el-form>
+          <el-form-item
+              label-width="80px"
+              label="入职时间"
+          >
+            <el-row>
+              <el-col :span="7">
+                <el-date-picker
+                    type="date"
+                    placeholder="选择日期"
+                    v-model="form.joinDate"
+                    style="width: 100%;"
+                ></el-date-picker>
+              </el-col>
+              <el-col :span="7">
+                <el-time-picker
+                    placeholder="选择时间"
+                    v-model="form.joinDate"
+                    style="width: 100%; margin-left: 10px"
+                ></el-time-picker>
+              </el-col>
+            </el-row>
+          </el-form-item>
         </el-form>
         <div
             slot="footer"
@@ -308,7 +275,7 @@
 
 <script>
 import request from "@/utils/request";
-import moment from 'moment';   //引入时间格式化插件moment
+import moment from "moment"; //引入时间格式化插件moment
 export default {
   data() {
     return {
@@ -320,16 +287,17 @@ export default {
         pageSize: 5,
       },
       departments: [],
-      positions:[],
       tableData: [],
       form: {
-        sign: "1",
+        sign: 1,
       },
       total: 0,
+      textfol: 1,
       dialogFormVisible: false,
       labelPosition: "right",
       value: "",
       multipleSelection: [],
+      xl: 1,
     };
   },
   //加载过程的动作
@@ -338,7 +306,6 @@ export default {
     //this.load();
     this.Find();
     this.FindDepartment();
-    this.FindPosition();
   },
   //页面控件的事件方法
   methods: {
@@ -359,7 +326,7 @@ export default {
       this.dialogFormVisible = true;
     },
     edit(obj) {
-      //console.log(obj);
+      console.log(typeof obj.sign);
       this.form = obj;
       this.dialogFormVisible = true;
     },
@@ -391,26 +358,10 @@ export default {
         }
       });
     },
-    FindPosition() {
-      request.get("/position/findPositionName").then((res) => {
-        if (res.code === "0") {
-          this.positions = res.data;
-          console.log(res);
-        } else {
-          this.$message({
-            message: res.msg,
-            type: "error",
-          });
-        }
-      });
-    },
     Find() {
       request.get("/test/search", {params: this.params}).then((res) => {
         if (res.code === "0") {
-          this.tableData = res.data.list.map(item => ({
-            ...item,
-            sign: item.sign.toString(),
-          }));
+          this.tableData = res.data.list;
           this.total = res.data.total;
         } else {
           this.$message({
@@ -510,11 +461,8 @@ export default {
       }
     },
     formatDate(date) {
-      if (date === undefined || date === null) {
-        return "";
-      }
-      return moment(date).format('YYYY-MM-DD HH:mm:ss');
-    }
+      return moment(date).format("YYYY-MM-DD HH:mm:ss");
+    },
   },
 };
 </script>
